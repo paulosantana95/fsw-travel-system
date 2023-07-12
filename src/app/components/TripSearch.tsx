@@ -21,7 +21,7 @@ function TripSearch() {
           <CurrencyInput placeholder="Orçamento" />
         </div>
 
-        <Button variant="primary">Buscar</Button>
+        <Button>Buscar</Button>
       </div>
     </div>
   );
