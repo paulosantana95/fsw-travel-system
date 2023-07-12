@@ -4,9 +4,15 @@ import { Trip } from "@prisma/client";
 import React from "react";
 
 async function getTrips() {
-  const trips = await prisma.trip.findMany({});
-
-  return trips;
+  try {
+    const trips = await prisma.trip.findMany({});
+    return trips;
+  } catch (error) {
+    // Lida com erros ocorridos durante a execução da consulta
+    throw error;
+  } finally {
+    await prisma.$disconnect();
+  }
 }
 
 async function RecommendedTrips() {
