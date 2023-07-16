@@ -3,12 +3,11 @@
 import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import Input from "@/components/Input";
-import { Trip } from "@prisma/client";
-import { Decimal } from "@prisma/client/runtime";
-import { differenceInDays } from "date-fns";
+import { differenceInDays, isAfter } from "date-fns";
 import { Controller, useForm } from "react-hook-form";
 
 interface TripReservationProps {
+  tripId: string;
   tripStartDate: Date;
   tripEndDate: Date;
   maxGuests: number;
@@ -22,6 +21,7 @@ interface TripReservationForm {
 }
 
 function TripReservation({
+  tripId,
   maxGuests,
   tripStartDate,
   tripEndDate,
@@ -33,10 +33,57 @@ function TripReservation({
     formState: { errors },
     control,
     watch,
+    setError,
   } = useForm<TripReservationForm>();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: TripReservationForm) => {
+    const response = await fetch("http://localhost:3000/api/trips/check", {
+      method: "POST",
+      body: Buffer.from(
+        JSON.stringify({
+          startDate: data.startDate,
+          endDate: data.endDate,
+          tripId,
+        })
+      ),
+    });
+
+    const res = await response.json();
+
+    console.log(res);
+
+    if (res?.error?.code === "TRIP_ALREADY_RESERVED") {
+      setError("startDate", {
+        type: "manual",
+        message: "Data de início já reservada",
+      });
+
+      return setError("endDate", {
+        type: "manual",
+        message: "Data final já reservada",
+      });
+    }
+
+    if (res?.error?.code === "INVALID_START_DATE") {
+      setError("startDate", {
+        type: "manual",
+        message: "Data inválida",
+      });
+    }
+
+    if (res?.error?.code === "INVALID_END_DATE") {
+      return setError("endDate", {
+        type: "manual",
+        message: "Data inválida",
+      });
+    }
+
+    if (res?.error?.code === "END_DATE_BEFORE_START_DATE") {
+      return setError("endDate", {
+        type: "manual",
+        message: "Data final anterior a data inicial",
+      });
+    }
   };
 
   const startDate = watch("startDate");
@@ -74,6 +121,11 @@ function TripReservation({
               value: true,
               message: "Data final é obrigatória",
             },
+            validate: (value) =>
+              !value ||
+              !startDate ||
+              isAfter(value, startDate) ||
+              "Data final anterior a data inicial",
           }}
           control={control}
           render={({ field }) => (
@@ -97,11 +149,16 @@ function TripReservation({
             value: true,
             message: "Número de hóspedes é obrigatório",
           },
+          max: {
+            value: maxGuests,
+            message: `Número de hóspedes deve ser menor ou igual a ${maxGuests}`,
+          },
         })}
         placeholder={`Número de hóspedes(${maxGuests})`}
         className="mt-4"
         error={!!errors?.guests}
         errorMessage={errors?.guests?.message}
+        type="number"
       />
 
       <div className="flex justify-between mt-3">
