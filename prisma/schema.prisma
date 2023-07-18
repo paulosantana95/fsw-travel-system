@@ -36,6 +36,7 @@ model TripReservation {
   trip      Trip     @relation(fields: [tripId], references: [id])
   userId    String
   user      User     @relation(fields: [userId], references: [id])
+  guests    Int      @default(5)
   startDate DateTime
   endDate   DateTime
   totalPaid Decimal  @db.Decimal(8, 2)
