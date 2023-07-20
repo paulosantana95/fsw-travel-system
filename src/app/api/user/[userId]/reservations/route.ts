@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/prisma";
-import { id } from "date-fns/locale";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request, { params: { userId } }: { params: { userId: string } }) {
