@@ -5,7 +5,6 @@ import Image from "next/image";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { AiOutlineMenu } from "react-icons/ai";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 function Header() {
   // Menu
@@ -56,7 +55,7 @@ function Header() {
 
           {menuIsOpen && (
             <div className="z-50 absolute top-14 left-0 w-full h-[100px] bg-white  border-solid rounded-lg shadow-md flex flex-col justify-center items-center">
-              <Link href="/my-trips">
+              <Link href="/my-trips" onClick={() => setMenuIsOpen(false)}>
                 <button className="text-primary text-xs pb-2 pt-2 border-b border-grayLighter border-solid font-semibold">
                   Minhas viagens
                 </button>

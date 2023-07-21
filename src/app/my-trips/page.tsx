@@ -5,6 +5,8 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { Prisma, TripReservation } from "@prisma/client";
 import UserReservationItem from "./components/UserReservationItem";
+import Button from "@/components/Button";
+import Link from "next/link";
 
 function MyTrips() {
   const [reservations, setReservations] = useState<
@@ -38,9 +40,21 @@ function MyTrips() {
       <h1 className="font-semibold text-primaryDarker text-xl">
         Minhas Viagens
       </h1>
-      {reservations?.map((reservation) => (
-        <UserReservationItem key={reservation.id} reservation={reservation} />
-      ))}
+      {reservations.length > 0 ? (
+        reservations?.map((reservation) => (
+          <UserReservationItem key={reservation.id} reservation={reservation} />
+        ))
+      ) : (
+        <div className="flex flex-col">
+          <p className=" mt-3 font-medium text-primaryDarker">
+            Você ainda não tem nenhuma reserva! =(
+          </p>
+
+          <Link href="/">
+            <Button className="w-full mt-4">Fazer reserva</Button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
