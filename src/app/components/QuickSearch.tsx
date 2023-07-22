@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 function QuickSearch() {
@@ -14,20 +15,40 @@ function QuickSearch() {
 
       <div className="flex w-full justify-between mt-5">
         <div className="flex flex-col items-center gap-1">
-          <Image width={38} height={38} src="/hotel-icon.png" alt="Hotel" />
-          <p className="text-sm text-grayPrimary">Resorts</p>
+          <Link
+            href="/trips/search?text=hotel"
+            className="flex flex-col items-center gap-1 hover:text-primary transition-all"
+          >
+            <Image width={38} height={38} src="/hotel-icon.png" alt="Hotel" />
+            <p className="text-sm text-grayPrimary">Resorts</p>
+          </Link>
         </div>
         <div className="flex flex-col items-center gap-1">
-          <Image width={38} height={38} src="/farm-icon.png" alt="Hotel" />
-          <p className="text-sm text-grayPrimary">Fazendas</p>
+          <Link
+            href="/trips/search?text=fazendas"
+            className="flex flex-col items-center gap-1"
+          >
+            <Image width={38} height={38} src="/farm-icon.png" alt="Hotel" />
+            <p className="text-sm text-grayPrimary">Fazendas</p>
+          </Link>
         </div>
         <div className="flex flex-col items-center gap-1">
-          <Image width={38} height={38} src="/cottage-icon.png" alt="Hotel" />
-          <p className="text-sm text-grayPrimary">Chalés</p>
+          <Link
+            href="/trips/search?text=chales"
+            className="flex flex-col items-center gap-1"
+          >
+            <Image width={38} height={38} src="/cottage-icon.png" alt="Hotel" />
+            <p className="text-sm text-grayPrimary">Chalés</p>
+          </Link>
         </div>
         <div className="flex flex-col items-center gap-1">
-          <Image width={38} height={38} src="/inn-icon.png" alt="Hotel" />
-          <p className="text-sm text-grayPrimary">Pousadas</p>
+          <Link
+            href="/trips/search?text=pousadas"
+            className="flex flex-col items-center gap-1"
+          >
+            <Image width={38} height={38} src="/inn-icon.png" alt="Hotel" />
+            <p className="text-sm text-grayPrimary">Pousadas</p>
+          </Link>
         </div>
       </div>
     </div>
