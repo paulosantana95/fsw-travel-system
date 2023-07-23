@@ -13,14 +13,14 @@ function QuickSearch() {
         <div className="w-full h-[1px] bg-grayLighter"></div>
       </div>
 
-      <div className="flex w-full justify-between mt-5">
+      <div className="flex w-full justify-between mt-5 lg:mt-10 lg:justify-center lg:gap-40">
         <div className="flex flex-col items-center gap-1">
           <Link
             href="/trips/search?text=hotel"
             className="flex flex-col items-center gap-1 hover:text-primary transition-all"
           >
             <Image width={38} height={38} src="/hotel-icon.png" alt="Hotel" />
-            <p className="text-sm text-grayPrimary">Resorts</p>
+            <p className="text-sm lg:text-base text-grayPrimary">Resorts</p>
           </Link>
         </div>
         <div className="flex flex-col items-center gap-1">
@@ -29,7 +29,7 @@ function QuickSearch() {
             className="flex flex-col items-center gap-1"
           >
             <Image width={38} height={38} src="/farm-icon.png" alt="Hotel" />
-            <p className="text-sm text-grayPrimary">Fazendas</p>
+            <p className="text-sm lg:text-base text-grayPrimary">Fazendas</p>
           </Link>
         </div>
         <div className="flex flex-col items-center gap-1">
@@ -38,7 +38,7 @@ function QuickSearch() {
             className="flex flex-col items-center gap-1"
           >
             <Image width={38} height={38} src="/cottage-icon.png" alt="Hotel" />
-            <p className="text-sm text-grayPrimary">Chalés</p>
+            <p className="text-sm lg:text-base text-grayPrimary">Chalés</p>
           </Link>
         </div>
         <div className="flex flex-col items-center gap-1">
@@ -47,7 +47,7 @@ function QuickSearch() {
             className="flex flex-col items-center gap-1"
           >
             <Image width={38} height={38} src="/inn-icon.png" alt="Hotel" />
-            <p className="text-sm text-grayPrimary">Pousadas</p>
+            <p className="text-sm lg:text-base text-grayPrimary">Pousadas</p>
           </Link>
         </div>
       </div>
