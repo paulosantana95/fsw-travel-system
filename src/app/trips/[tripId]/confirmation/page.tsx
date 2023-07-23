@@ -13,7 +13,8 @@ import Button from "@/components/Button";
 
 import { Trip } from "@prisma/client";
 import { toast } from "react-toastify";
-import router from "next/router";
+import { loadStripe } from "@stripe/stripe-js";
+import { id } from "date-fns/locale";
 
 function TripConfirmation({ params }: { params: { tripId: string } }) {
   const [trip, setTrip] = useState<Trip | null>();
@@ -55,8 +56,7 @@ function TripConfirmation({ params }: { params: { tripId: string } }) {
   if (!trip) return null;
 
   const handleBuyClick = async () => {
-    console.log(data);
-    const res = await fetch("http://localhost:3000/api/trips/reservation", {
+    const res = await fetch("http://localhost:3000/api/payment", {
       method: "POST",
       body: Buffer.from(
         JSON.stringify({
@@ -64,8 +64,11 @@ function TripConfirmation({ params }: { params: { tripId: string } }) {
           startDate: searchParams.get("startDate"),
           endDate: searchParams.get("endDate"),
           guests: Number(searchParams.get("guests")),
-          userId: (data?.user as any).id!,
-          totalPaid: totalPrice,
+          name: trip.name,
+          description: trip.description,
+          // userId: (data?.user as any).id!,
+          totalPrice,
+          coverImage: trip.coverImage,
         })
       ),
     });
@@ -76,7 +79,15 @@ function TripConfirmation({ params }: { params: { tripId: string } }) {
       });
     }
 
-    router.push("/");
+    const { sessionId } = await res.json();
+
+    const stripe = await loadStripe(
+      process.env.NEXT_PUBLIC_STRIPE_KEY as string
+    );
+
+    await stripe?.redirectToCheckout({ sessionId });
+
+    // router.push("/");
 
     toast.success("Reserva realizada com sucesso!", {
       position: "bottom-center",

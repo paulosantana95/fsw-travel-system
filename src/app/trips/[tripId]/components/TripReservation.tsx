@@ -53,8 +53,6 @@ function TripReservation({
 
     const res = await response.json();
 
-    console.log(res);
-
     if (res?.error?.code === "TRIP_ALREADY_RESERVED") {
       setError("startDate", {
         type: "manual",
