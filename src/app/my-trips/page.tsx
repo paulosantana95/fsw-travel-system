@@ -3,11 +3,10 @@
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { Prisma, TripReservation } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import UserReservationItem from "./components/UserReservationItem";
 import Button from "@/components/Button";
 import Link from "next/link";
-import { fetchServerResponse } from "next/dist/client/components/router-reducer/fetch-server-response";
 
 function MyTrips() {
   const [reservations, setReservations] = useState<
@@ -22,7 +21,7 @@ function MyTrips() {
 
   const fetchReservations = async () => {
     const response = await fetch(
-      `http://localhost:3000/api/user/${(data?.user as any)?.id}/reservations`
+      `/api/user/${(data?.user as any)?.id}/reservations`
     );
     const json = await response.json();
 

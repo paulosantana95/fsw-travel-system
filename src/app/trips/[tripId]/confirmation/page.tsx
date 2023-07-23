@@ -14,7 +14,6 @@ import Button from "@/components/Button";
 import { Trip } from "@prisma/client";
 import { toast } from "react-toastify";
 import { loadStripe } from "@stripe/stripe-js";
-import { id } from "date-fns/locale";
 
 function TripConfirmation({ params }: { params: { tripId: string } }) {
   const [trip, setTrip] = useState<Trip | null>();
@@ -28,7 +27,7 @@ function TripConfirmation({ params }: { params: { tripId: string } }) {
 
   useEffect(() => {
     const fetchTrip = async () => {
-      const response = await fetch(`http://localhost:3000/api/trips/check`, {
+      const response = await fetch(`/api/trips/check`, {
         method: "POST",
         body: JSON.stringify({
           tripId: params.tripId,
@@ -56,7 +55,7 @@ function TripConfirmation({ params }: { params: { tripId: string } }) {
   if (!trip) return null;
 
   const handleBuyClick = async () => {
-    const res = await fetch("http://localhost:3000/api/payment", {
+    const res = await fetch("/api/payment", {
       method: "POST",
       body: Buffer.from(
         JSON.stringify({
