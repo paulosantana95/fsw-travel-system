@@ -74,8 +74,12 @@ function TripHeader({ trip }: TripHeaderProps) {
           {trip.name}
         </h1>
         <div className="flex item-center gap-1 my-1">
-          <ReactCountryFlag countryCode={trip.countryCode} svg />
-          <p className="text-xs lg:text-base text-grayPrimary">
+          <ReactCountryFlag
+            className="lg:text-xl"
+            countryCode={trip.countryCode}
+            svg
+          />
+          <p className="text-xs underline lg:text-base text-grayPrimary">
             {trip.location}
           </p>
         </div>
